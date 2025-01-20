@@ -1,11 +1,11 @@
 package main
 
 import (
-	"net"
-	"log"
+	pb "github.com/KamigamiNoGigan/auth/pkg/user_api_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	pb "github.com/KamigamiNoGigan/auth/pkg/user_api_v1"
+	"log"
+	"net"
 )
 
 const (
@@ -24,7 +24,7 @@ func main() {
 	s := grpc.NewServer()
 	reflection.Register(s)
 	pb.RegisterUserAPIServer(s, &server{})
-	
+
 	log.Printf("server listening at %v", port)
 	if err = s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
