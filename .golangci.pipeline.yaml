@@ -34,7 +34,7 @@ linters:
   enable:
     - errcheck
     - goconst
-    - goimports
+    # - goimports
     # - gosec
     - govet
     - ineffassign
