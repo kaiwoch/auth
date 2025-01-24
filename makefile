@@ -27,3 +27,16 @@ generate-user-api-v1-windows:
 	--go-grpc_out=pkg/user_api_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc.exe \
 	api/user_api_v1/user_api_v1.proto
+
+build:
+	go env -w GOOS=linux
+	go env -w GOARCH=amd64
+	go build -o auth cmd/server/main.go
+
+send:
+	pscp -i C:/Users/KanzA/Downloads/putty-0.73-ru-17/PuTTY/123.ppk  $(CURDIR)/auth root@90.156.156.247:
+
+docker-build-and-push:
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/kaiwoch/test-server:v0.0.2 .
+	docker login -u token --password-stdin < pass.txt cr.selcloud.ru/kaiwoch
+	docker push cr.selcloud.ru/kaiwoch/test-server:v0.0.2
